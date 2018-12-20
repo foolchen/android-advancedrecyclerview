@@ -16,6 +16,9 @@
 
 package com.h6ah4i.android.example.advrecyclerview.demo_d_basic;
 
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,6 +31,7 @@ import com.h6ah4i.android.example.advrecyclerview.common.data.AbstractDataProvid
 import com.h6ah4i.android.example.advrecyclerview.common.utils.DrawableUtils;
 import com.h6ah4i.android.example.advrecyclerview.common.utils.ViewUtils;
 import com.h6ah4i.android.widget.advrecyclerview.draggable.DraggableItemAdapter;
+import com.h6ah4i.android.widget.advrecyclerview.draggable.DraggableItemShadow;
 import com.h6ah4i.android.widget.advrecyclerview.draggable.DraggableItemState;
 import com.h6ah4i.android.widget.advrecyclerview.draggable.ItemDraggableRange;
 import com.h6ah4i.android.widget.advrecyclerview.utils.AbstractDraggableItemViewHolder;
@@ -39,13 +43,15 @@ class DraggableExampleItemAdapter
         extends RecyclerView.Adapter<DraggableExampleItemAdapter.MyViewHolder>
         implements DraggableItemAdapter<DraggableExampleItemAdapter.MyViewHolder> {
     private static final String TAG = "MyDraggableItemAdapter";
+    private Drawable mDrawable = new ColorDrawable(Color.BLUE);
 
     private AbstractDataProvider mProvider;
 
-    public static class MyViewHolder extends AbstractDraggableItemViewHolder {
+    public static class MyViewHolder extends AbstractDraggableItemViewHolder implements DraggableItemShadow {
         public FrameLayout mContainer;
         public View mDragHandle;
         public TextView mTextView;
+        public Drawable mDrawable;
 
         public MyViewHolder(View v) {
             super(v);
@@ -53,6 +59,14 @@ class DraggableExampleItemAdapter
             mDragHandle = v.findViewById(R.id.drag_handle);
             mTextView = v.findViewById(android.R.id.text1);
         }
+
+      @Override public Drawable getItemDrawable() {
+        if (mDrawable != null) {
+          mDrawable.setBounds(itemView.getLeft(), itemView.getTop(), itemView.getRight(),
+              itemView.getBottom());
+        }
+        return mDrawable;
+      }
     }
 
     public DraggableExampleItemAdapter(AbstractDataProvider dataProvider) {
@@ -77,8 +91,12 @@ class DraggableExampleItemAdapter
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         final LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-        final View v = inflater.inflate((viewType == 0) ? R.layout.list_item_draggable : R.layout.list_item2_draggable, parent, false);
-        return new MyViewHolder(v);
+        final View v = inflater.inflate(
+            (viewType == 0) ? R.layout.list_item_draggable : R.layout.list_item2_draggable, parent,
+            false);
+        MyViewHolder holder = new MyViewHolder(v);
+        holder.mDrawable = mDrawable;
+        return holder;
     }
 
     @Override

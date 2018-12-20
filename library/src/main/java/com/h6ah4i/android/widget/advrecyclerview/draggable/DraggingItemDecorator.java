@@ -18,8 +18,11 @@ package com.h6ah4i.android.widget.advrecyclerview.draggable;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.graphics.drawable.NinePatchDrawable;
 import android.view.View;
 import android.view.animation.Interpolator;
@@ -165,11 +168,23 @@ class DraggingItemDecorator extends BaseDraggableItemDecorator {
         if (t < 1.0f) {
             ViewCompat.postInvalidateOnAnimation(mRecyclerView);
         }
-
         mLastDraggingItemScaleX = scaleX;
         mLastDraggingItemScaleY = scaleY;
         mLastDraggingItemRotation = rotation;
         mLastDraggingItemAlpha = alpha;
+    }
+
+    @Override public void onDraw(Canvas c, RecyclerView parent, RecyclerView.State state) {
+        if (mDraggingItemInfo != null && mDraggingItemInfo.id != -1) {
+            RecyclerView.ViewHolder vh = parent.findViewHolderForItemId(mDraggingItemInfo.id);
+            if (vh instanceof DraggableItemShadow) {
+                Drawable itemDrawable = ((DraggableItemShadow) vh).getItemDrawable();
+                if (itemDrawable != null) {
+                    itemDrawable.draw(c);
+                }
+            }
+        }
+        super.onDraw(c, parent, state);
     }
 
     public void setupDraggingItemEffects(DraggingItemEffectsInfo info) {

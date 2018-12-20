@@ -16,6 +16,8 @@
 
 package com.h6ah4i.android.widget.advrecyclerview.draggable;
 
+import android.graphics.drawable.Drawable;
+import androidx.annotation.Nullable;
 import com.h6ah4i.android.widget.advrecyclerview.draggable.annotation.DraggableItemStateFlags;
 
 import androidx.annotation.NonNull;
