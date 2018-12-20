@@ -50,6 +50,9 @@
         <activity
             android:name=".demo_d_staggered_grid.DraggableStaggeredGridExampleActivity"
             android:label="@string/activity_title_demo_d_staggered_grid"/>
+        <activity
+            android:label="@string/activity_title_demo_d_flexbox"
+            android:name=".demo_d_flexbox.DraggableFlexboxExampleActivity"/>
 
         <activity
             android:name=".demo_d_on_longpress.DragOnLongPressExampleActivity"

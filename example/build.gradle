@@ -72,4 +72,5 @@ dependencies {
     implementation project(':library')
     implementation 'com.google.android.material:material:1.0.0'
     implementation ('com.h6ah4i.android.tablayouthelper:tablayouthelper:1.0.0')
+    implementation 'com.google.android:flexbox:1.1.0'
 }

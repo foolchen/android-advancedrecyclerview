@@ -1720,6 +1720,10 @@ public class RecyclerViewDragDropManager implements DraggableItemConstants {
                 case CustomRecyclerViewUtils.LAYOUT_TYPE_LINEAR_VERTICAL:
                     swapTargetHolder = findSwapTargetItemForLinearLayoutManager(fc, alternative);
                     break;
+                case CustomRecyclerViewUtils.LAYOUT_TYPE_FLEXBOX_ROW:
+                case CustomRecyclerViewUtils.LAYOUT_TYPE_FLEXBOX_COLUMN:
+                    swapTargetHolder = findSwapTargetItemForStaggeredGridLayoutManager(fc, alternative);
+                    break;
                 default:
                     break;
             }

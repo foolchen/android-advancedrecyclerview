@@ -25,6 +25,7 @@ import com.h6ah4i.android.example.advrecyclerview.R;
 import com.h6ah4i.android.example.advrecyclerview.demo_composition_all.CompositionAllExampleActivity;
 import com.h6ah4i.android.example.advrecyclerview.demo_d_basic.DraggableExampleActivity;
 import com.h6ah4i.android.example.advrecyclerview.demo_d_check_can_drop.DraggableCheckCanDropExampleActivity;
+import com.h6ah4i.android.example.advrecyclerview.demo_d_flexbox.DraggableFlexboxExampleActivity;
 import com.h6ah4i.android.example.advrecyclerview.demo_d_grid.DraggableGridExampleActivity;
 import com.h6ah4i.android.example.advrecyclerview.demo_d_minimal.MinimalDraggableExampleActivity;
 import com.h6ah4i.android.example.advrecyclerview.demo_d_on_longpress.DragOnLongPressExampleActivity;
@@ -131,6 +132,7 @@ public class LauncherPageFragment extends Fragment {
                 adapter.put(DraggableCheckCanDropExampleActivity.class, R.string.activity_title_demo_d_check_can_drop);
                 adapter.put(DraggableGridExampleActivity.class, R.string.activity_title_demo_d_grid);
                 adapter.put(DraggableStaggeredGridExampleActivity.class, R.string.activity_title_demo_d_staggered_grid);
+                adapter.put(DraggableFlexboxExampleActivity.class, R.string.activity_title_demo_d_flexbox);
                 break;
             case PAGE_SWIPE:
                 // Swipe

@@ -70,7 +70,7 @@ android {
 
 dependencies {
     implementation "androidx.recyclerview:recyclerview:${rootProject.ext.recyclerViewVersion}"
-
+    implementation 'com.google.android:flexbox:1.1.0'
     testImplementation 'junit:junit:4.12'
     testImplementation 'androidx.test:rules:1.1.0'
     testImplementation 'androidx.test:runner:1.1.0'

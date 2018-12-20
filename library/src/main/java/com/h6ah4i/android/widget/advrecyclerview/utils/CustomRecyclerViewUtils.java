@@ -28,6 +28,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.OrientationHelper;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
+import com.google.android.flexbox.FlexDirection;
+import com.google.android.flexbox.FlexboxLayoutManager;
 
 public class CustomRecyclerViewUtils {
     public static final int ORIENTATION_UNKNOWN = -1;
@@ -41,6 +43,8 @@ public class CustomRecyclerViewUtils {
     public static final int LAYOUT_TYPE_GRID_VERTICAL = 3;
     public static final int LAYOUT_TYPE_STAGGERED_GRID_HORIZONTAL = 4;
     public static final int LAYOUT_TYPE_STAGGERED_GRID_VERTICAL = 5;
+    public static final int LAYOUT_TYPE_FLEXBOX_ROW = 6;
+    public static final int LAYOUT_TYPE_FLEXBOX_COLUMN = 7;
 
     public static final int INVALID_SPAN_ID = -1;
     public static final int INVALID_SPAN_COUNT = -1;
@@ -66,6 +70,10 @@ public class CustomRecyclerViewUtils {
             case LAYOUT_TYPE_GRID_VERTICAL:
             case LAYOUT_TYPE_STAGGERED_GRID_VERTICAL:
                 return ORIENTATION_VERTICAL;
+            case LAYOUT_TYPE_FLEXBOX_ROW:
+                return ORIENTATION_HORIZONTAL;
+            case LAYOUT_TYPE_FLEXBOX_COLUMN:
+                return ORIENTATION_VERTICAL;
             default:
                 throw new IllegalArgumentException("Unknown layout type (= " + layoutType + ")");
         }
@@ -85,10 +93,17 @@ public class CustomRecyclerViewUtils {
                 return LAYOUT_TYPE_LINEAR_VERTICAL;
             }
         } else if (layoutManager instanceof StaggeredGridLayoutManager) {
-            if (((StaggeredGridLayoutManager) layoutManager).getOrientation() == StaggeredGridLayoutManager.HORIZONTAL) {
+            if (((StaggeredGridLayoutManager) layoutManager).getOrientation()
+                == StaggeredGridLayoutManager.HORIZONTAL) {
                 return LAYOUT_TYPE_STAGGERED_GRID_HORIZONTAL;
             } else {
                 return LAYOUT_TYPE_STAGGERED_GRID_VERTICAL;
+            }
+        } else if (layoutManager instanceof FlexboxLayoutManager) {
+            if(((FlexboxLayoutManager) layoutManager).getFlexDirection() == FlexDirection.ROW){
+                return LAYOUT_TYPE_FLEXBOX_ROW;
+            }else{
+                return LAYOUT_TYPE_FLEXBOX_COLUMN;
             }
         } else {
             return LAYOUT_TYPE_UNKNOWN;
@@ -221,15 +236,18 @@ public class CustomRecyclerViewUtils {
     }
 
     public static int getOrientation(@NonNull RecyclerView.LayoutManager layoutManager) {
-        if (layoutManager instanceof GridLayoutManager) {
-            return ((GridLayoutManager) layoutManager).getOrientation();
-        } else if (layoutManager instanceof LinearLayoutManager) {
-            return ((LinearLayoutManager) layoutManager).getOrientation();
-        } else if (layoutManager instanceof StaggeredGridLayoutManager) {
-            return ((StaggeredGridLayoutManager) layoutManager).getOrientation();
-        } else {
-            return ORIENTATION_UNKNOWN;
-        }
+      if (layoutManager instanceof GridLayoutManager) {
+        return ((GridLayoutManager) layoutManager).getOrientation();
+      } else if (layoutManager instanceof LinearLayoutManager) {
+        return ((LinearLayoutManager) layoutManager).getOrientation();
+      } else if (layoutManager instanceof StaggeredGridLayoutManager) {
+        return ((StaggeredGridLayoutManager) layoutManager).getOrientation();
+      } else if (layoutManager instanceof FlexboxLayoutManager) {
+        return ((FlexboxLayoutManager) layoutManager).getFlexDirection() == FlexDirection.ROW
+            ? RecyclerView.HORIZONTAL : RecyclerView.VERTICAL;
+      } else {
+        return ORIENTATION_UNKNOWN;
+      }
     }
 
     private static int findFirstVisibleItemPositionIncludesPadding(LinearLayoutManager lm) {
